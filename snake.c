@@ -7,7 +7,7 @@
 
 typedef enum {UP, DOWN, LEFT, RIGHT} Direction;
 typedef struct {int x, y;} Pos;
-typedef struct Snake_Part {Pos p; struct Snake_Part *next, *prev;} Snake_Part;
+typedef struct SnakePart {Pos p; struct SnakePart *next, *prev;} SnakePart;
 
 int main() {
 	setlocale(LC_ALL, "");
@@ -26,15 +26,15 @@ int main() {
 	Direction dir = UP;
 	Pos food = {rand()%COLS,rand()%LINES};
 	mvaddch(food.y, food.x, 'A');
-	Snake_Part *head;
-	head = (Snake_Part*) malloc(sizeof(Snake_Part));
-	Snake_Part *tail = head;
+	SnakePart *head;
+	head = (SnakePart*) malloc(sizeof(SnakePart));
+	SnakePart *tail = head;
 	head->p = (Pos) {COLS/2,LINES/2};
 
 	bool dead = false;
 
 	while (!dead) {
-		Snake_Part *tmp = head;
+		SnakePart *tmp = head;
 		switch (getch()) {
 			case 'w':
 				if (dir == DOWN) {break;}
@@ -59,7 +59,7 @@ int main() {
 				break;
 		}
 		tmp = head;
-		head = (Snake_Part*) malloc(sizeof(Snake_Part));
+		head = (SnakePart*) malloc(sizeof(SnakePart));
 		head->next = tmp;
 		head->p.x = head->next->p.x + ((int[]){0,0,-1,1})[dir];
 		head->p.y = head->next->p.y + ((int[]){-1,1,0,0})[dir];
